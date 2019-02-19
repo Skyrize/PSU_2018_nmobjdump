@@ -1,38 +1,36 @@
-#include  <fcntl.h>
-#include  <stdio.h>
-#include  <elf.h>
-#include  <sys/mman.h>
-#include  <sys/stat.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <stdlib.h>
+/*
+** EPITECH PROJECT, 2018
+** PSU_2018_nmobjdump
+** File description:
+** main.c
+*/
 
-int                main(int ac , char **av)
+#include "objdump.h"
+
+int dump_file(char *file_name)
 {
-    FILE *file = fopen(av[1], "r");
-    
-    Elf64_Ehdr   elfHeader;
-    Elf64_Shdr   sectionHeader;
-    int offset = 0;
+    object_dump_t *obj = create_object_dump(file_name);
 
-    if (file) {
-        fread(&elfHeader, sizeof(Elf64_Ehdr), 1, file);
-        fseek(file, elfHeader.e_shoff + elfHeader.e_shstrndx * sizeof(sectionHeader), SEEK_SET);
-        fread(&sectionHeader, sizeof(sectionHeader), 1, file);
+    if (!obj)
+        return (84);
+    if (obj->sys_type == SYS_32) {
 
-        char *SectNames = malloc(sectionHeader.sh_size);
-  fseek(file, sectionHeader.sh_offset, SEEK_SET);
-  fread(SectNames, sectionHeader.sh_size, 1, file);
-
-        for (; offset < elfHeader.e_shnum; offset++) {
-            const char *name = "";
-
-            fseek(file, elfHeader.e_shoff + offset * sizeof(sectionHeader), SEEK_SET);
-            fread(&sectionHeader, sizeof(sectionHeader), 1, file);
-            if (sectionHeader.sh_name)
-                name = SectNames + sectionHeader.sh_name;
-            printf("%s\n", name);
-        }
+    } else if (obj->sys_type == SYS_64) {
+        dump_sys_64(obj);
     }
+    destroy_object_dump(obj);
+    return (0);
+}
+
+int main(int argc, char **argv)
+{
+    int my_errno = 0;
+
+	if (argc == 1)
+		return (dump_file("a.out"));
+    for (int i = 1; i != argc; i++) {
+        if (dump_file(argv[i]) != 0)
+            my_errno = 84;
+    }
+	return (my_errno);
 }

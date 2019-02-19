@@ -12,6 +12,11 @@ CFLAGS	=	-W -Wall -Wextra  -g3
 SRC_NM		=	nm/main.c	\
 
 SRC_OBJDUMP		=	objdump/main.c	\
+					objdump/create.c	\
+					objdump/destroy.c	\
+					objdump/flags.c		\
+					objdump/dump_sys_32.c	\
+					objdump/dump_sys_64.c	\
 
 OBJ_NM		=	$(SRC_NM:.c=.o)
 OBJ_OBJDUMP		=	$(SRC_OBJDUMP:.c=.o)
