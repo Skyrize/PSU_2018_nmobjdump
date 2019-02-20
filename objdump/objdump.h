@@ -47,6 +47,7 @@ typedef enum {
 } flags_t;
 
 #define PRINT_FLAG(has_print, flags, flag) printf("%s%s", has_print != 0 && (flags & flag) ? ", " : "", flags & flag ? #flag : "")
+#define IS_ASCII(x) (x >= 32 && x <= 126)
 
                     /* Functions */
 
@@ -64,5 +65,12 @@ uint32_t compute_flags(object_dump_t *obj);
 bool elf64_has_section_name(char *seeked_name, object_dump_t *obj);
 bool elf64_has_section_type(uint32_t seeked_type, object_dump_t *obj);
 void print_flags(uint32_t flags);
+char *get_sys_64_section_name(object_dump_t *obj, int index);
+void dump_sys_64_section_memory(Elf64_Shdr *section, unsigned int starting_byte,
+void *section_content);
+void dump_sys_64_section_ascii(Elf64_Shdr *section, unsigned int starting_byte,
+void *section_content);
+
+int get_number_padding(unsigned int n1, unsigned int n2, int base);
 
 #endif /* OBJDUMP_H_ */
