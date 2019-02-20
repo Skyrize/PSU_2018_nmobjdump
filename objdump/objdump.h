@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
 typedef enum {
     SYS_32 = 1,
@@ -44,6 +46,8 @@ typedef enum {
     D_PAGED = 0x100
 } flags_t;
 
+#define PRINT_FLAG(has_print, flags, flag) printf("%s%s", has_print != 0 && (flags & flag) ? ", " : "", flags & flag ? #flag : "")
+
                     /* Functions */
 
 int open_file(char *file_name);
@@ -56,5 +60,9 @@ void dump_sys_64(object_dump_t *obj);
 void dump_sys_32(object_dump_t *obj);
 
 uint32_t compute_flags(object_dump_t *obj);
+
+bool elf64_has_section_name(char *seeked_name, object_dump_t *obj);
+bool elf64_has_section_type(uint32_t seeked_type, object_dump_t *obj);
+void print_flags(uint32_t flags);
 
 #endif /* OBJDUMP_H_ */

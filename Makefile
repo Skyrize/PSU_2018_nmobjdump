@@ -15,6 +15,7 @@ SRC_OBJDUMP		=	objdump/main.c	\
 					objdump/create.c	\
 					objdump/destroy.c	\
 					objdump/flags.c		\
+					objdump/tool.c		\
 					objdump/dump_sys_32.c	\
 					objdump/dump_sys_64.c	\
 
