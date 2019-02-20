@@ -7,38 +7,42 @@
 
 #include "objdump.h"
 
+void dump_sys_32_header(object_dump_t *obj)
+{
+    Elf32_Ehdr *header = obj->buf;
+    uint32_t flags = compute_sys_32_flags(obj);
+
+    printf("\n%s:     file format elf32-x86-32\n", obj->file_name);
+    printf("architecture: i386:x86-32, flags 0x%08x:\n", flags);
+    print_flags(flags);
+    printf("start address 0x%08x\n\n", (unsigned int)header->e_entry);
+}
+
+void dump_sys_32_section_content(Elf32_Shdr *section, void *section_content)
+{
+    for (unsigned int i = 0; i < section->sh_size; i += 16) {
+        dump_sys_32_section_memory(section, i, section_content);
+        dump_sys_32_section_ascii(section, i, section_content);
+    }
+}
+
+void dump_sys_32_sections(object_dump_t *obj)
+{
+    Elf32_Ehdr *header = obj->buf;
+    Elf32_Shdr *sections = (void *)header + header->e_shoff;
+
+    for (int i = 0; i != header->e_shnum - 3; i++) {
+        if (sections[i].sh_size == 0 || sections[i].sh_type == SHT_NULL
+        || sections[i].sh_type == SHT_NOBITS)
+            continue;
+        printf("Contents of section %s:\n", get_sys_32_section_name(obj, i));
+        dump_sys_32_section_content(&sections[i],
+        obj->buf + sections[i].sh_offset);
+    }
+}
+
 void dump_sys_32(object_dump_t *obj)
 {
-    (void)obj;
+    dump_sys_32_header(obj);
+    dump_sys_32_sections(obj);
 }
-// {
-// 	int fd = 0;
-//     Elf64_Ehdr *elfHeader = NULL;
-//     Elf64_Shdr *sectionHeader = NULL;
-
-//     FILE *file = fopen(av[1], "r");
-    
-//     Elf64_Ehdr elfHeader;
-//     Elf64_Shdr sectionHeader;
-//     int offset = 0;
-
-//     if (file) {
-//         fread(&elfHeader, sizeof(Elf64_Ehdr), 1, file);
-//         fseek(file, elfHeader.e_shoff + elfHeader.e_shstrndx * sizeof(sectionHeader), SEEK_SET);
-//         fread(&sectionHeader, sizeof(sectionHeader), 1, file);
-
-//         char *SectNames = malloc(sectionHeader.sh_size);
-//   fseek(file, sectionHeader.sh_offset, SEEK_SET);
-//   fread(SectNames, sectionHeader.sh_size, 1, file);
-
-//         for (; offset < elfHeader.e_shnum; offset++) {
-//             const char *name = "";
-
-//             fseek(file, elfHeader.e_shoff + offset * sizeof(sectionHeader), SEEK_SET);
-//             fread(&sectionHeader, sizeof(sectionHeader), 1, file);
-//             if (sectionHeader.sh_name)
-//                 name = SectNames + sectionHeader.sh_name;
-//             printf("%s\n", name);
-//         }
-//     }
-// }

@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2018
 ** PSU_2018_nmobjdump
 ** File description:
-** tool.c
+** tool32.c
 */
 
 #include "objdump.h"
 
-void dump_sys_64_section_memory(Elf64_Shdr *section, unsigned int starting_byte,
-void *section_content)
+void dump_sys_32_section_memory(Elf32_Shdr *section,
+unsigned int starting_byte, void *section_content)
 {
     int padding = get_number_padding(*(uint32_t *)section_content,
     *(uint32_t *)section_content + section->sh_size, 16);
@@ -29,8 +29,8 @@ void *section_content)
     printf("  ");
 }
 
-void dump_sys_64_section_ascii(Elf64_Shdr *section, unsigned int starting_byte,
-void *section_content)
+void dump_sys_32_section_ascii(Elf32_Shdr *section,
+unsigned int starting_byte, void *section_content)
 {
     char *section_content_string = section_content;
 
@@ -46,21 +46,21 @@ void *section_content)
     printf("\n");
 }
 
-char *get_sys_64_section_name(object_dump_t *obj, int index)
+char *get_sys_32_section_name(object_dump_t *obj, int index)
 {
-    Elf64_Ehdr *header = obj->buf;
-    Elf64_Shdr *sections = (void *)header + header->e_shoff;
-    Elf64_Shdr *names_section = &sections[header->e_shstrndx];
+    Elf32_Ehdr *header = obj->buf;
+    Elf32_Shdr *sections = (void *)header + header->e_shoff;
+    Elf32_Shdr *names_section = &sections[header->e_shstrndx];
 
     return ((char *)(obj->buf
     + names_section->sh_offset + sections[index].sh_name));
 }
 
-bool elf64_has_section_name(char *seeked_name, object_dump_t *obj)
+bool elf32_has_section_name(char *seeked_name, object_dump_t *obj)
 {
-    Elf64_Ehdr *header = obj->buf;
-    Elf64_Shdr *sections = (void *)header + header->e_shoff;
-    Elf64_Shdr *names_section = &sections[header->e_shstrndx];
+    Elf32_Ehdr *header = obj->buf;
+    Elf32_Shdr *sections = (void *)header + header->e_shoff;
+    Elf32_Shdr *names_section = &sections[header->e_shstrndx];
     char *section_name = NULL;
 
     for (int i = 0; i != header->e_shnum; i++) {
@@ -72,10 +72,10 @@ bool elf64_has_section_name(char *seeked_name, object_dump_t *obj)
     return (false);
 }
 
-bool elf64_has_section_type(uint32_t seeked_type, object_dump_t *obj)
+bool elf32_has_section_type(uint32_t seeked_type, object_dump_t *obj)
 {
-    Elf64_Ehdr *header = obj->buf;
-    Elf64_Shdr *sections = (void *)header + header->e_shoff;
+    Elf32_Ehdr *header = obj->buf;
+    Elf32_Shdr *sections = (void *)header + header->e_shoff;
 
     for (int i = 0; i != header->e_shnum; i++)
         if (sections[i].sh_type == seeked_type)

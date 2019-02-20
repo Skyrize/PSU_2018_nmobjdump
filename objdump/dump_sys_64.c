@@ -10,7 +10,7 @@
 void dump_sys_64_header(object_dump_t *obj)
 {
     Elf64_Ehdr *header = obj->buf;
-    uint32_t flags = compute_flags(obj);
+    uint32_t flags = compute_sys_64_flags(obj);
 
     printf("\n%s:     file format elf64-x86-64\n", obj->file_name);
     printf("architecture: i386:x86-64, flags 0x%08x:\n", flags);
@@ -36,7 +36,8 @@ void dump_sys_64_sections(object_dump_t *obj)
         || sections[i].sh_type == SHT_NOBITS)
             continue;
         printf("Contents of section %s:\n", get_sys_64_section_name(obj, i));
-        dump_sys_64_section_content(&sections[i], obj->buf + sections[i].sh_offset);
+        dump_sys_64_section_content(&sections[i],
+        obj->buf + sections[i].sh_offset);
     }
 }
 

@@ -26,7 +26,29 @@ void print_flags(uint32_t flags)
         printf("\n");
 }
 
-uint32_t compute_flags(object_dump_t *obj)
+uint32_t compute_sys_32_flags(object_dump_t *obj)
+{
+    Elf32_Ehdr *header = obj->buf;
+    uint32_t flags = 0;
+
+    if (header->e_type == ET_REL)
+        flags |= HAS_RELOC;
+    if (header->e_type == ET_EXEC)
+        flags |= EXEC_P;
+    if (elf32_has_section_name(".line", obj) == true)
+        flags |= HAS_LINENO;
+    if (elf32_has_section_name(".debug", obj) == true)
+        flags |= HAS_DEBUG;
+    if (elf32_has_section_type(SHT_SYMTAB, obj) == true)
+        flags |= HAS_SYMS;
+    if (header->e_type == ET_DYN)
+        flags |= DYNAMIC;
+    if (elf32_has_section_type(SHT_DYNAMIC, obj) == true)
+        flags |= D_PAGED;
+    return (flags);
+}
+
+uint32_t compute_sys_64_flags(object_dump_t *obj)
 {
     Elf64_Ehdr *header = obj->buf;
     uint32_t flags = 0;

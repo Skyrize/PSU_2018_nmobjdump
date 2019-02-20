@@ -60,17 +60,29 @@ void destroy_object_dump(object_dump_t *obj);
 void dump_sys_64(object_dump_t *obj);
 void dump_sys_32(object_dump_t *obj);
 
-uint32_t compute_flags(object_dump_t *obj);
+uint32_t compute_sys_64_flags(object_dump_t *obj);
+uint32_t compute_sys_32_flags(object_dump_t *obj);
 
 bool elf64_has_section_name(char *seeked_name, object_dump_t *obj);
 bool elf64_has_section_type(uint32_t seeked_type, object_dump_t *obj);
 void print_flags(uint32_t flags);
 char *get_sys_64_section_name(object_dump_t *obj, int index);
 void dump_sys_64_section_memory(Elf64_Shdr *section, unsigned int starting_byte,
-void *section_content);
+    void *section_content);
 void dump_sys_64_section_ascii(Elf64_Shdr *section, unsigned int starting_byte,
-void *section_content);
+    void *section_content);
 
 int get_number_padding(unsigned int n1, unsigned int n2, int base);
+
+void dump_sys_32_section_memory(Elf32_Shdr *section, unsigned int starting_byte, void *section_content);
+void dump_sys_32_section_ascii(Elf32_Shdr *section, unsigned int starting_byte, void *section_content);
+char *get_sys_32_section_name(object_dump_t *obj, int index);
+bool elf32_has_section_name(char *seeked_name, object_dump_t *obj);
+bool elf32_has_section_type(uint32_t seeked_type, object_dump_t *obj);
+
+void dump_sys_32_header(object_dump_t *obj);
+void dump_sys_32_section_content(Elf32_Shdr *section, void *section_content);
+void dump_sys_32_sections(object_dump_t *obj);
+void dump_sys_32(object_dump_t *obj);
 
 #endif /* OBJDUMP_H_ */
