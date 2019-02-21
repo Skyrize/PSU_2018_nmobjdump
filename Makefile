@@ -11,6 +11,7 @@ CFLAGS	=	-W -Wall -Wextra  -g3
 
 SRC_NM		=	nm/main.c	\
 				nm/nm.c			\
+				nm/linked_list.c			\
 				nm/tools.c			\
 				nm/create.c	\
 				nm/destroy.c	\
