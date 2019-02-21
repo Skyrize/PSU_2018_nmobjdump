@@ -13,7 +13,7 @@ int open_file(char *file_name)
     int fd = open(file_name, O_RDONLY);
 
     if (fd == -1)
-        dprintf(2, "my_objdump: \'%s\': No such file\n", file_name);
+        dprintf(2, "objdump: \'%s\': No such file\n", file_name);
     return (fd);
 }
 
@@ -22,7 +22,7 @@ void *mmap_file(int fd, char *file_name, struct stat *stats)
     void *buf = mmap(NULL, stats->st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
     if (buf ==  MAP_FAILED)
-        dprintf(2, "my_objdump: Warning: \'%s\' is not an ordinary file\n",
+        dprintf(2, "objdump: Warning: \'%s\' is not an ordinary file\n",
         file_name);
     return (buf);
 }
@@ -32,7 +32,7 @@ int get_sys_type(char *file_name, void *buf)
     int type = ((char *)buf)[4];
 
     if (type != 1 && type != 2) {
-        dprintf(2, "my_objdump: %s: File format not recognized\n", file_name);
+        dprintf(2, "objdump: %s: File format not recognized\n", file_name);
         return (-1);
     }
     return (type);
@@ -45,7 +45,7 @@ bool is_magic_number_valid(char *file_name, void *buf)
     && ((char *)buf)[EI_MAG2] == ELFMAG2
     && ((char *)buf)[EI_MAG3] == ELFMAG3)
         return (true);
-    dprintf(2, "my_objdump: %s: File format not recognized\n", file_name);
+    dprintf(2, "objdump: %s: File format not recognized\n", file_name);
     return (false);
 }
 
