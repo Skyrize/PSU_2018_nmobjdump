@@ -10,13 +10,7 @@
 void dump_sys_64_section_memory(Elf64_Shdr *section, unsigned int starting_byte,
 void *section_content)
 {
-    int padding = get_number_padding(*(uint32_t *)section_content,
-    *(uint32_t *)section_content + section->sh_size, 16);
-
-    printf(" ");
-    for (int i = 0; i != padding; i++)
-        printf("0");
-    printf("%04x ", (unsigned int)(starting_byte + section->sh_addr));
+    printf(" %04x ", (unsigned int)(starting_byte + section->sh_addr));
     for (unsigned int i = 0; i != 16; i++) {
         if (i == 4 || i == 8 || i == 12)
             printf(" ");
