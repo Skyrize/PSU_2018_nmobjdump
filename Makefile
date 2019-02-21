@@ -10,6 +10,10 @@ CC		=	gcc
 CFLAGS	=	-W -Wall -Wextra  -g3
 
 SRC_NM		=	nm/main.c	\
+				nm/nm.c			\
+				nm/tools.c			\
+				nm/create.c	\
+				nm/destroy.c	\
 
 SRC_OBJDUMP		=	objdump/main.c	\
 					objdump/create.c	\
