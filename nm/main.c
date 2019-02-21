@@ -15,8 +15,8 @@ int nm_file(char *file_name, int nb_files)
 
     if (!obj)
         return (84);
-	if (nb_files > 1)
-		printf("\n%s:\n", file_name);
+    if (nb_files > 1)
+        printf("\n%s:\n", file_name);
     if (obj->sys_type == SYS_32) {
         my_errno = nm_sys_32(obj);
     } else if (obj->sys_type == SYS_64) {

@@ -33,13 +33,23 @@ typedef struct object_dump_s {
     int sys_type;
 } object_dump_t;
 
+typedef struct node_s node_t;
+typedef struct node_s
+{
+    char type;
+	char *key;
+	void *value;
+	node_t *next;
+	node_t *prev;
+} node_t;
+
 #define IS_ASCII(x) (x >= 32 && x <= 126)
 
                     /* Functions */
 
 int nm_sys_64(object_dump_t *obj);
 int nm_sys_32(object_dump_t *obj);
-Elf64_Shdr *get_sys_64_symtab(object_dump_t *obj);
+Elf64_Shdr *get_sys_64_section_by_name(char *name, object_dump_t *obj);
 object_dump_t *create_object_dump(char *file_name);
 void destroy_object_dump(object_dump_t *obj);
 
