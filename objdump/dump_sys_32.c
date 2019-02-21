@@ -12,8 +12,8 @@ void dump_sys_32_header(object_dump_t *obj)
     Elf32_Ehdr *header = obj->buf;
     uint32_t flags = compute_sys_32_flags(obj);
 
-    printf("\n%s:     file format elf32-x86-32\n", obj->file_name);
-    printf("architecture: i386:x86-32, flags 0x%08x:\n", flags);
+    printf("\n%s:     file format elf32-i386\n", obj->file_name);
+    printf("architecture: i386, flags 0x%08x:\n", flags);
     print_flags(flags);
     printf("start address 0x%08x\n\n", (unsigned int)header->e_entry);
 }
