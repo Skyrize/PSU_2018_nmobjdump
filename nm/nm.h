@@ -38,12 +38,12 @@ typedef struct node_s
 {
     char type;
 	char *key;
-	void *value;
+	unsigned int value;
 	node_t *next;
 	node_t *prev;
 } node_t;
 
-#define IS_ASCII(x) (x >= 32 && x <= 126)
+#define IS_ASCII(x) ((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z'))
 
                     /* Functions */
 

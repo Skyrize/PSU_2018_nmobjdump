@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 {
     int my_errno = 0;
 
+	//printf("%s && %s = %d", argv[1], argv[2], key_is_higher(argv[1], argv[2]));
     if (argc == 1)
         return (nm_file("a.out", argc));
     for (int i = 1; i != argc; i++) {
