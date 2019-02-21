@@ -22,3 +22,19 @@ Elf64_Shdr *get_sys_64_section_by_name(char *name, object_dump_t *obj)
     }
     return (NULL);
 }
+
+Elf32_Shdr *get_sys_32_section_by_name(char *name, object_dump_t *obj)
+{
+    Elf32_Ehdr *header = obj->buf;
+    Elf32_Shdr *sections = (void *)header + header->e_shoff;
+    Elf32_Shdr *names_section = &sections[header->e_shstrndx];
+    char *section_name = NULL;
+
+    for (int i = 0; i != header->e_shnum; i++) {
+        section_name = obj->buf + names_section->sh_offset
+        + sections[i].sh_name;
+        if (strcmp(section_name, name) == 0)
+            return (&sections[i]);
+    }
+    return (NULL);
+}

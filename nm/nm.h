@@ -53,4 +53,10 @@ Elf64_Shdr *get_sys_64_section_by_name(char *name, object_dump_t *obj);
 object_dump_t *create_object_dump(char *file_name);
 void destroy_object_dump(object_dump_t *obj);
 
+void bubble_sort(node_t **llist);
+node_t *add_to_llist(char type, char *key, unsigned int value, node_t **llist);
+char get_sys_32_type(Elf32_Sym *sym, object_dump_t *obj);
+char get_sys_64_type(Elf64_Sym *sym, object_dump_t *obj);
+Elf32_Shdr *get_sys_32_section_by_name(char *name, object_dump_t *obj);
+
 #endif /* NM_H_ */

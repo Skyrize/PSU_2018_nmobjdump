@@ -11,7 +11,7 @@
 int nm_file(char *file_name, int nb_files)
 {
     object_dump_t *obj = create_object_dump(file_name);
-	int my_errno = 0;
+    int my_errno = 0;
 
     if (!obj)
         return (84);
@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 {
     int my_errno = 0;
 
-	//printf("%s && %s = %d", argv[1], argv[2], key_is_higher(argv[1], argv[2]));
     if (argc == 1)
         return (nm_file("a.out", argc));
     for (int i = 1; i != argc; i++) {
