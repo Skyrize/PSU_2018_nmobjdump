@@ -40,10 +40,10 @@ int get_sys_type(char *file_name, void *buf)
 
 bool is_magic_number_valid(char *file_name, void *buf)
 {
-    if (((char *)buf)[0] == 0x7f
-    && ((char *)buf)[1] == 'E'
-    && ((char *)buf)[2] == 'L'
-    && ((char *)buf)[3] == 'F')
+    if (((char *)buf)[EI_MAG0] == ELFMAG0
+    && ((char *)buf)[EI_MAG1] == ELFMAG1
+    && ((char *)buf)[EI_MAG2] == ELFMAG2
+    && ((char *)buf)[EI_MAG3] == ELFMAG3)
         return (true);
     dprintf(2, "my_objdump: %s: File format not recognized\n", file_name);
     return (false);
