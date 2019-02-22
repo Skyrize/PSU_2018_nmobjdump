@@ -34,7 +34,8 @@ void dump_sys_64_sections(object_dump_t *obj)
     for (int i = 0; i != header->e_shnum - 3; i++) {
         if (sections[i].sh_size == 0 || sections[i].sh_type == SHT_NULL
         || sections[i].sh_type == SHT_NOBITS || (header->e_type == ET_REL
-        && (sections[i].sh_type == SHT_RELA || sections[i].sh_type == SHT_REL)))
+        && (sections[i].sh_type == SHT_RELA || sections[i].sh_type == SHT_REL))
+        || is_tab(get_sys_64_section_name(obj, i)) == true)
             continue;
         printf("Contents of section %s:\n", get_sys_64_section_name(obj, i));
         dump_sys_64_section_content(&sections[i],

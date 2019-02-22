@@ -85,4 +85,6 @@ void dump_sys_32_section_content(Elf32_Shdr *section, void *section_content);
 void dump_sys_32_sections(object_dump_t *obj);
 void dump_sys_32(object_dump_t *obj);
 
+bool is_tab(char *name);
+
 #endif /* OBJDUMP_H_ */

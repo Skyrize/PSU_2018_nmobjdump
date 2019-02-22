@@ -7,7 +7,7 @@
 
 CC		=	gcc
 
-CFLAGS	=	-W -Wall -Wextra  -g3
+CFLAGS	=	-W -Wall -Wextra
 
 SRC_NM		=	nm/main.c	\
 				nm/nm.c			\

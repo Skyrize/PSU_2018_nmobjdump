@@ -11,7 +11,7 @@ void nm_sys_64_dump(node_t *llist)
 {
     bubble_sort(&llist);
     for (node_t *tmp = llist; tmp; tmp = tmp->next) {
-        tmp->value == 0 ? printf("                ") :
+        tmp->type == 'U' || tmp->type == 'w' ? printf("                ") :
         printf("%016x", tmp->value);
         printf(" %c %s\n", tmp->type, tmp->key);
     }
@@ -44,7 +44,7 @@ void nm_sys_32_dump(node_t *llist)
 {
     bubble_sort(&llist);
     for (node_t *tmp = llist; tmp; tmp = tmp->next) {
-        tmp->value == 0 ? printf("                ") :
+        tmp->type == 'U' || tmp->type == 'w' ? printf("        ") :
         printf("%08x", tmp->value);
         printf(" %c %s\n", tmp->type, tmp->key);
     }
