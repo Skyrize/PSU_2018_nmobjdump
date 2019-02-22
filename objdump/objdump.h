@@ -46,7 +46,8 @@ typedef enum {
     D_PAGED = 0x100
 } flags_t;
 
-#define PRINT_FLAG(has_print, flags, flag) printf("%s%s", has_print != 0 && (flags & flag) ? ", " : "", flags & flag ? #flag : "")
+#define PRINT_FLAG(has_print, flags, flag) printf("%s%s", has_print != 0 \
+&& (flags & flag) ? ", " : "", flags & flag ? #flag : "")
 #define IS_ASCII(x) (x >= 32 && x <= 126)
 
                     /* Functions */
@@ -74,8 +75,10 @@ void dump_sys_64_section_ascii(Elf64_Shdr *section, unsigned int starting_byte,
 
 int get_number_padding(unsigned int n1, unsigned int n2, int base);
 
-void dump_sys_32_section_memory(Elf32_Shdr *section, unsigned int starting_byte, void *section_content);
-void dump_sys_32_section_ascii(Elf32_Shdr *section, unsigned int starting_byte, void *section_content);
+void dump_sys_32_section_memory(Elf32_Shdr *section, unsigned int starting_byte,
+void *section_content);
+void dump_sys_32_section_ascii(Elf32_Shdr *section, unsigned int starting_byte,
+void *section_content);
 char *get_sys_32_section_name(object_dump_t *obj, int index);
 bool elf32_has_section_name(char *seeked_name, object_dump_t *obj);
 bool elf32_has_section_type(uint32_t seeked_type, object_dump_t *obj);

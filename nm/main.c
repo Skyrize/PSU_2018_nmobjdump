@@ -1,7 +1,7 @@
 /*
-** EPITECH PROJECT, 2019
+** EPITECH PROJECT, 2018
 ** PSU_2018_nmobjdump
-** File description: Created on: 7 févr. 2019
+** File description:
 ** main.c
 */
 

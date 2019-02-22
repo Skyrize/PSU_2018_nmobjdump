@@ -5,49 +5,49 @@
 ## Makefile
 ##
 
-CC		=	gcc
+CC        =    gcc
 
-CFLAGS	=	-W -Wall -Wextra
+CFLAGS    =    -W -Wall -Wextra
 
-SRC_NM		=	nm/main.c	\
-				nm/nm.c			\
-				nm/type32.c			\
-				nm/type64.c			\
-				nm/linked_list.c			\
-				nm/tools.c			\
-				nm/create.c	\
-				nm/destroy.c	\
+SRC_NM        =    nm/main.c    \
+                nm/nm.c            \
+                nm/type32.c            \
+                nm/type64.c            \
+                nm/linked_list.c            \
+                nm/tools.c            \
+                nm/create.c    \
+                nm/destroy.c    \
 
-SRC_OBJDUMP		=	objdump/main.c	\
-					objdump/create.c	\
-					objdump/destroy.c	\
-					objdump/flags.c		\
-					objdump/tool.c		\
-					objdump/tool32.c		\
-					objdump/other.c		\
-					objdump/dump_sys_32.c	\
-					objdump/dump_sys_64.c	\
+SRC_OBJDUMP        =    objdump/main.c    \
+                    objdump/create.c    \
+                    objdump/destroy.c    \
+                    objdump/flags.c        \
+                    objdump/tool.c        \
+                    objdump/tool32.c        \
+                    objdump/other.c        \
+                    objdump/dump_sys_32.c    \
+                    objdump/dump_sys_64.c    \
 
-OBJ_NM		=	$(SRC_NM:.c=.o)
-OBJ_OBJDUMP		=	$(SRC_OBJDUMP:.c=.o)
+OBJ_NM        =    $(SRC_NM:.c=.o)
+OBJ_OBJDUMP        =    $(SRC_OBJDUMP:.c=.o)
 
-NAME_NM	=	my_nm
-NAME_OBJDUMP	=	my_objdump
+NAME_NM    =    my_nm
+NAME_OBJDUMP    =    my_objdump
 
-all:		nm objdump
+all:        nm objdump
 
-nm:	$(OBJ_NM)
-		$(CC) -o $(NAME_NM) $(OBJ_NM)
+nm:    $(OBJ_NM)
+        $(CC) -o $(NAME_NM) $(OBJ_NM)
 
-objdump:	$(OBJ_OBJDUMP)
-		$(CC) -o $(NAME_OBJDUMP) $(OBJ_OBJDUMP)
+objdump:    $(OBJ_OBJDUMP)
+        $(CC) -o $(NAME_OBJDUMP) $(OBJ_OBJDUMP)
 
 clean:
-		rm -f $(OBJ_NM)
-		rm -f $(OBJ_OBJDUMP)
+        rm -f $(OBJ_NM)
+        rm -f $(OBJ_OBJDUMP)
 
-fclean:		clean
-		rm -f $(NAME_NM)
-		rm -f $(NAME_OBJDUMP)
+fclean:        clean
+        rm -f $(NAME_NM)
+        rm -f $(NAME_OBJDUMP)
 
-re:		fclean all
+re:        fclean all

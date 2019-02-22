@@ -37,10 +37,10 @@ typedef struct node_s node_t;
 typedef struct node_s
 {
     char type;
-	char *key;
-	unsigned int value;
-	node_t *next;
-	node_t *prev;
+    char *key;
+    unsigned int value;
+    node_t *next;
+    node_t *prev;
 } node_t;
 
 #define IS_ASCII(x) ((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z'))

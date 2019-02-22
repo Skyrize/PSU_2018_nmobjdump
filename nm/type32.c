@@ -16,12 +16,12 @@ char get_sys_32_type_1(Elf32_Sym *sym)
     else if (ELF32_ST_BIND(sym->st_info) == STB_WEAK) {
             c = 'W';
             if (sym->st_shndx == SHN_UNDEF)
-                c = 'w';
+       c = 'w';
     } else if (ELF32_ST_BIND(sym->st_info)
     == STB_WEAK && ELF32_ST_TYPE(sym->st_info) == STT_OBJECT) {
             c = 'V';
             if (sym->st_shndx == SHN_UNDEF)
-                c = 'v';
+       c = 'v';
     }
     return (c);
 }
@@ -44,13 +44,13 @@ char get_sys_32_type_3(Elf32_Sym *sym, Elf32_Shdr *shdr)
     char c = 0;
 
     if (shdr[sym->st_shndx].sh_type == SHT_NOBITS
-             && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+    && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
         c = 'B';
     else if (shdr[sym->st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym->st_shndx].sh_flags == SHF_ALLOC)
+    && shdr[sym->st_shndx].sh_flags == SHF_ALLOC)
         c = 'R';
     else if (shdr[sym->st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+    && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
         c = 'D';
     return (c);
 }

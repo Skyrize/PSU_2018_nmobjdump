@@ -44,13 +44,13 @@ char get_sys_64_type_3(Elf64_Sym *sym, Elf64_Shdr *shdr)
     char c = 0;
 
     if (shdr[sym->st_shndx].sh_type == SHT_NOBITS
-             && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+    && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
         c = 'B';
     else if (shdr[sym->st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym->st_shndx].sh_flags == SHF_ALLOC)
+    && shdr[sym->st_shndx].sh_flags == SHF_ALLOC)
         c = 'R';
     else if (shdr[sym->st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+    && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
         c = 'D';
     return (c);
 }
