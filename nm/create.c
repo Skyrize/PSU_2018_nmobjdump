@@ -13,7 +13,7 @@ int open_file(char *file_name)
     int fd = open(file_name, O_RDONLY);
 
     if (fd == -1)
-        dprintf(2, "nm: \'%s\': No such file\n", file_name);
+        dprintf(2, "nm: '%s': No such file\n", file_name);
     return (fd);
 }
 
@@ -22,7 +22,7 @@ void *mmap_file(int fd, char *file_name, struct stat *stats)
     void *buf = mmap(NULL, stats->st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
     if (buf ==  MAP_FAILED)
-        dprintf(2, "nm: Warning: \'%s\' is not an ordinary file\n",
+        dprintf(2, "nm: Warning: '%s' is not an ordinary file\n",
         file_name);
     return (buf);
 }
@@ -38,7 +38,7 @@ int get_sys_type(char *file_name, void *buf)
     return (type);
 }
 
-bool is_magic_number_valid(char *file_name, void *buf)
+bool is_elf_valid(char *file_name, void *buf)
 {
     if (((char *)buf)[EI_MAG0] == ELFMAG0
     && ((char *)buf)[EI_MAG1] == ELFMAG1
@@ -51,21 +51,24 @@ bool is_magic_number_valid(char *file_name, void *buf)
 
 object_dump_t *create_object_dump(char *file_name)
 {
-    object_dump_t *new_obj = malloc(sizeof(*new_obj));
+    object_dump_t *obj = malloc(sizeof(*obj));
 
-    if (!new_obj)
+    if (!obj)
         return (NULL);
-    new_obj->file_name = file_name;
-    if ((new_obj->fd = open_file(file_name)) == -1)
+    obj->file_name = file_name;
+    if ((obj->fd = open_file(file_name)) == -1)
         return (NULL);
-    fstat(new_obj->fd, &new_obj->stats);
-    new_obj->buf = mmap_file(new_obj->fd, file_name, &new_obj->stats);
-    if (new_obj->buf == MAP_FAILED)
+    fstat(obj->fd, &obj->stats);
+    obj->buf = mmap_file(obj->fd, file_name, &obj->stats);
+    if (obj->buf == MAP_FAILED || !is_elf_valid(file_name, obj->buf)
+    || (obj->sys_type = get_sys_type(obj->file_name, obj->buf)) == -1)
         return (NULL);
-    if (!is_magic_number_valid(file_name, new_obj->buf))
+    if ((obj->sys_type == 2 && obj->stats.st_size + obj->buf < obj->buf
+    + ((Elf64_Ehdr *)obj->buf)->e_shoff) || (obj->sys_type == 1
+    && obj->stats.st_size + obj->buf < obj->buf +
+    ((Elf64_Ehdr *)obj->buf)->e_shoff)) {
+        dprintf(2, "objdump: %s: File truncated\n", file_name);
         return (NULL);
-    new_obj->sys_type = get_sys_type(new_obj->file_name, new_obj->buf);
-    if (new_obj->sys_type == -1)
-        return (NULL);
-    return (new_obj);
+    }
+    return (obj);
 }
