@@ -61,10 +61,10 @@ char get_sys_32_type_4(Elf32_Sym *sym, Elf32_Shdr *shdr)
 
     if ((shdr[sym->st_shndx].sh_type == SHT_PROGBITS
     && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
-    || shdr[sym->st_shndx].sh_type == SHT_INIT_ARRAY
-        || shdr[sym->st_shndx].sh_type == SHT_FINI_ARRAY)
+    || (shdr[sym->st_shndx].sh_type == SHT_INIT_ARRAY
+    || shdr[sym->st_shndx].sh_type == SHT_FINI_ARRAY)) {
         c = 'T';
-    else if (shdr[sym->st_shndx].sh_type == SHT_DYNAMIC)
+    } else if (shdr[sym->st_shndx].sh_type == SHT_DYNAMIC)
         c = 'D';
     else
         c = '?';
@@ -79,10 +79,13 @@ char get_sys_32_type(Elf32_Sym *sym, object_dump_t *obj)
 
     if ((c = get_sys_32_type_1(sym)) != 0 || (c = get_sys_32_type_2(sym)) != 0
     || (c = get_sys_32_type_3(sym, shdr)) != 0
-    || (c = get_sys_32_type_4(sym, shdr) != 0)) {
-        if (ELF32_ST_BIND(sym->st_info) == STB_LOCAL && c != '?')
+    || (c = get_sys_32_type_4(sym, shdr)) != 0) {
+        if (ELF32_ST_BIND(sym->st_info) == STB_LOCAL && c != '?') {
             c += 32;
+        }
         return (c);
+    } else {
+        c = '?';
     }
     return (c);
 }

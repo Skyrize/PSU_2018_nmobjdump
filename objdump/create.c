@@ -63,10 +63,10 @@ object_dump_t *create_object_dump(char *file_name)
     if (obj->buf == MAP_FAILED || !is_elf_valid(file_name, obj->buf)
     || (obj->sys_type = get_sys_type(obj->file_name, obj->buf)) == -1)
         return (NULL);
-    if ((obj->sys_type == 2 && obj->stats.st_size + obj->buf < obj->buf
-    + ((Elf64_Ehdr *)obj->buf)->e_shoff) || (obj->sys_type == 1
-    && obj->stats.st_size + obj->buf < obj->buf +
-    ((Elf64_Ehdr *)obj->buf)->e_shoff)) {
+    if ((obj->sys_type == 2 && (unsigned int)(obj->stats.st_size + obj->buf)
+    < (unsigned int)(obj->buf + ((Elf64_Ehdr *)obj->buf)->e_shoff))
+    || (obj->sys_type == 1 && (unsigned int)(obj->stats.st_size + obj->buf)
+    < (unsigned int)(obj->buf + ((Elf64_Ehdr *)obj->buf)->e_shoff))) {
         dprintf(2, "objdump: %s: File truncated\n", file_name);
         return (NULL);
     }

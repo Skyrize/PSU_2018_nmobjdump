@@ -61,8 +61,8 @@ char get_sys_64_type_4(Elf64_Sym *sym, Elf64_Shdr *shdr)
 
     if ((shdr[sym->st_shndx].sh_type == SHT_PROGBITS
     && shdr[sym->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
-    || shdr[sym->st_shndx].sh_type == SHT_INIT_ARRAY
-        || shdr[sym->st_shndx].sh_type == SHT_FINI_ARRAY)
+    || (shdr[sym->st_shndx].sh_type == SHT_INIT_ARRAY
+    || shdr[sym->st_shndx].sh_type == SHT_FINI_ARRAY))
         c = 'T';
     else if (shdr[sym->st_shndx].sh_type == SHT_DYNAMIC)
         c = 'D';
