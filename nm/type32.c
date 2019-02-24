@@ -14,14 +14,14 @@ char get_sys_32_type_1(Elf32_Sym *sym)
     if (ELF32_ST_BIND(sym->st_info) == STB_GNU_UNIQUE)
         c = 'u';
     else if (ELF32_ST_BIND(sym->st_info) == STB_WEAK) {
-            c = 'W';
-            if (sym->st_shndx == SHN_UNDEF)
-       c = 'w';
+        c = 'W';
+        if (sym->st_shndx == SHN_UNDEF)
+            c = 'w';
     } else if (ELF32_ST_BIND(sym->st_info)
     == STB_WEAK && ELF32_ST_TYPE(sym->st_info) == STT_OBJECT) {
-            c = 'V';
-            if (sym->st_shndx == SHN_UNDEF)
-       c = 'v';
+        c = 'V';
+        if (sym->st_shndx == SHN_UNDEF)
+            c = 'v';
     }
     return (c);
 }
